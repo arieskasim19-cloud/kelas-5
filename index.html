@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asesmen Sumatif Matematika - Operasi Hitung Bilangan Cacah</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            bg: '#020617',
+                            card: '#0f172a',
+                            border: '#38bdf8',
+                            glow: '#0ea5e9',
+                            electric: '#00f0ff',
+                            darkblue: '#030712',
+                        }
+                    },
+                    boxShadow: {
+                        'neon': '0 0 20px rgba(56, 189, 248, 0.3)',
+                        'neon-strong': '0 0 30px rgba(0, 240, 255, 0.6)',
+                        'inner-glow': 'inset 0 0 15px rgba(14, 165, 233, 0.2)'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter & Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .holo-grid {
+            background-image: linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        @keyframes electricPulse {
+            0%, 100% { border-color: rgba(56, 189, 248, 0.4); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
+            50% { border-color: rgba(0, 240, 255, 0.9); box-shadow: 0 0 25px rgba(0, 240, 255, 0.6); }
+        }
+        .electric-card {
+            animation: electricPulse 4s infinite ease-in-out;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0ea5e9;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+    </style>
+</head>
+<body class="bg-cyber-bg min-h-screen flex flex-col relative holo-grid">
+
+    <canvas id="electricCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-30"></canvas>
+
+    <!-- Marquee Announcement Header -->
+    <div class="bg-gradient-to-r from-blue-950 via-sky-900 to-blue-950 border-b border-sky-500/30 text-sky-300 py-2 overflow-hidden whitespace-nowrap relative z-10 shadow-lg shadow-sky-950/50">
+        <div class="inline-block animate-[marquee_28s_linear_infinite] font-orbitron text-xs sm:text-sm tracking-wider">
+            <span class="mx-6">⚡ Guru mata pelajaran: Adrianto Umar</span>
+            <span class="mx-6">|</span>
+            <span class="mx-6">NIP: 199008032019031008</span>
+            <span class="mx-6">|</span>
+            <span class="mx-6">Madrasah Ibtidaiyah Negeri 1 Kabupaten Gorontalo ⚡</span>
+            <span class="mx-6">⚡ Guru mata pelajaran: Adrianto Umar</span>
+            <span class="mx-6">|</span>
+            <span class="mx-6">NIP: 199008032019031008</span>
+            <span class="mx-6">|</span>
+            <span class="mx-6">Madrasah Ibtidaiyah Negeri 1 Kabupaten Gorontalo ⚡</span>
+        </div>
+    </div>
+
+    <style>
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
+
+    <header class="relative z-10 max-w-5xl w-full mx-auto px-4 py-6 text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-950/80 border border-sky-500/40 text-sky-400 text-xs sm:text-sm font-semibold mb-3 shadow-neon">
+            <svg class="w-4 h-4 animate-spin text-cyan-400" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            ASESMEN SUMATIF MATEMATIKA KELAS 5
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-extrabold font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-200 to-blue-500 drop-shadow-[0_0_15px_rgba(56,189,248,0.5)]">
+            OPERASI HITUNG BILANGAN CACAH
+        </h1>
+    </header>
+
+    <main class="relative z-10 max-w-4xl w-full mx-auto px-4 pb-12 flex-grow flex flex-col justify-center">
+
+        <div id="loginView" class="bg-cyber-card/90 backdrop-blur-md border border-sky-500/40 rounded-2xl p-6 sm:p-8 electric-card shadow-neon transition-all duration-300">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/30 border border-sky-400/50 overflow-hidden flex items-center justify-center shadow-neon">
+                    <img src="https://iili.io/nV8NAF4.md.png" alt="Identitas Logo" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/64x64/0f172a/38bdf8?text=MIN1'">
+                </div>
+                <h2 class="text-xl sm:text-2xl font-bold font-orbitron text-white">Identitas Peserta Didik</h2>
+                <p class="text-xs sm:text-sm text-slate-400 mt-1">Silakan pilih kelas dan nama lengkap Anda sebelum memulai asesmen.</p>
+            </div>
+
+            <form id="identityForm" class="space-y-5 max-w-lg mx-auto">
+                <div>
+                    <label class="block text-xs sm:text-sm font-semibold text-sky-300 mb-2 font-orbitron">NAMA LENGKAP SISWA</label>
+                    <select id="studentSelect" required class="w-full bg-slate-900/90 border border-sky-500/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-all text-sm">
+                        <option value="" disabled selected>-- Pilih Nama Siswa --</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs sm:text-sm font-semibold text-sky-300 mb-2 font-orbitron">PILIH KELAS</label>
+                    <select id="classSelect" required class="w-full bg-slate-900/90 border border-sky-500/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-all text-sm">
+                        <option value="" disabled selected>-- Pilih Kelas --</option>
+                        <option value="5.A">Kelas 5.A</option>
+                        <option value="5.B">Kelas 5.B</option>
+                    </select>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-gradient-to-r from-cyan-600 via-sky-500 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold font-orbitron py-3.5 px-6 rounded-xl shadow-neon-strong transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer">
+                        <span>MULAI ASESMEN</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="quizView" class="hidden flex flex-col gap-5">
+            <!-- Top Bar Info & Timer -->
+            <div class="bg-cyber-card/80 backdrop-blur-md border border-sky-500/40 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 shadow-neon">
+                <div>
+                    <div class="text-xs text-slate-400">Siswa: <span id="displayStudentName" class="text-cyan-400 font-semibold"></span></div>
+                    <div class="text-xs text-slate-400">Kelas: <span id="displayClassName" class="text-cyan-400 font-semibold"></span></div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2 bg-slate-900/80 border border-sky-500/30 px-3 py-1.5 rounded-xl">
+                        <svg class="w-4 h-4 text-cyan-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span id="timerText" class="font-orbitron text-sm font-bold text-cyan-400">30:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Navigation Grid / Palette -->
+            <div class="bg-cyber-card/80 backdrop-blur-md border border-sky-500/40 rounded-2xl p-4 shadow-neon">
+                <div class="text-xs font-orbitron text-sky-300 mb-2">NAVIGASI SOAL</div>
+                <div id="questionPalette" class="grid grid-cols-5 sm:grid-cols-10 gap-2">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-cyber-card/90 backdrop-blur-md border border-sky-500/50 rounded-2xl p-6 sm:p-8 electric-card shadow-neon relative">
+                <div class="flex items-center justify-between mb-4">
+                    <span id="questionBadge" class="px-3 py-1 rounded-full text-xs font-orbitron font-semibold bg-sky-950 border border-sky-400/50 text-cyan-300">Pilihan Ganda</span>
+                    <span class="text-xs text-slate-400 font-orbitron">Soal <span id="currentNum">1</span> dari 10</span>
+                </div>
+
+                <div id="questionContainer" class="mb-6">
+                    <!-- Question text and options inserted dynamically -->
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="flex items-center justify-between pt-4 border-t border-slate-800">
+                    <button id="prevBtn" type="button" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-300 font-semibold text-sm transition-all border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed">
+                        Sebelumnya
+                    </button>
+                    <button id="nextBtn" type="button" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold font-orbitron text-sm shadow-neon transition-all">
+                        Selanjutnya
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultView" class="hidden bg-cyber-card/95 backdrop-blur-md border border-sky-500/50 rounded-2xl p-6 sm:p-10 electric-card shadow-neon text-center max-w-lg mx-auto w-full">
+            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-600/40 border border-cyan-400 flex items-center justify-center shadow-neon-strong">
+                <svg class="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold font-orbitron text-white mb-1">ASESMEN SELESAI!</h2>
+            <p class="text-slate-400 text-sm mb-6">Jawaban Anda telah berhasil direkam oleh sistem.</p>
+
+            <div class="bg-slate-900/90 border border-sky-500/40 rounded-2xl p-5 mb-8 shadow-inner-glow text-left space-y-2">
+                <div class="text-xs text-sky-400 font-orbitron mb-2 uppercase">Informasi Peserta:</div>
+                <div class="text-sm text-slate-200">Nama Siswa: <span id="resName" class="font-semibold text-cyan-300"></span></div>
+                <div class="text-sm text-slate-200">Kelas: <span id="resClass" class="font-semibold text-cyan-300"></span></div>
+                <div class="text-sm text-slate-200">Guru Pengampu: <span class="font-semibold text-cyan-300">Adrianto Umar, S.Pd.</span></div>
+            </div>
+
+            <div class="flex justify-center">
+                <button id="restartBtn" type="button" class="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold font-orbitron text-sm shadow-neon-strong transition-all cursor-pointer">
+                    Selesai / Keluar
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="customModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-cyber-card border border-sky-500/60 rounded-2xl p-6 max-w-sm w-full shadow-neon text-center electric-card">
+            <div id="modalIcon" class="w-12 h-12 mx-auto mb-3 rounded-full flex items-center justify-center text-cyan-400 bg-cyan-950/50 border border-cyan-400/50">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h3 id="modalTitle" class="text-lg font-bold font-orbitron text-white mb-2">Pemberitahuan</h3>
+            <p id="modalMessage" class="text-slate-300 text-xs sm:text-sm mb-5">Pesan informasi sistem.</p>
+            <button id="modalCloseBtn" type="button" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 text-white font-bold font-orbitron text-xs shadow-neon transition-all cursor-pointer">
+                OK, Mengerti
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Electric background canvas animation
+        window.onload = function () {
+            const canvas = document.getElementById('electricCanvas');
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const particles = [];
+            for (let i = 0; i < 40; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.8,
+                    vy: (Math.random() - 0.5) * 0.8,
+                    radius: Math.random() * 2 + 1
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+                ctx.strokeStyle = 'rgba(56, 189, 248, 0.1)';
+
+                particles.forEach((p, index) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0 || p.x > width) p.vx *= -1;
+                    if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    for (let j = index + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                        if (dist < 120) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    }
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+
+            initStudents();
+        };
+
+        // Complete student list from MIN 1 Kabupaten Gorontalo
+        const studentNames = [
+            "ABDUL HAFIZ MAHFUL",
+            "AL GAJALI PUTRA DAUD",
+            "ALBY ABBASY SHUWAN BASKORO",
+            "ALIANSYAH ILOHUNA",
+            "APRILIA PUTRI HARUN",
+            "AS'AD SAID AQIL PAKAYA",
+            "ASYRAF NIZHAMUDIN PAKAYA",
+            "FATIMAH ZAHRA HUSEN",
+            "FELISA FATMA BOUTI",
+            "KARTIKA HARUN",
+            "MELISA TAA",
+            "MOH. UMAR AL IRSYAD POTALE",
+            "MOHAMAD FAZRIN HUSUNA",
+            "MOHAMAD GIFARI HUNOWU",
+            "MOHAMAD REIHAN MONOARFA",
+            "MOHAMMAD RIZKI UTIARAHMAN",
+            "NOVIYANTI EKAPUTRI ADAM",
+            "NUR ABDAH LIMONU",
+            "NUR KHUMAIRA PUTRI SALAHANI",
+            "PUTRA HUSAIN ULAQ",
+            "PUTRI YANI NIODE",
+            "RAFA REYNANDA LUNETO",
+            "RAFASYA HERMANTO",
+            "RAHMAT ABAS",
+            "ABDUL GIAS ISMAIL",
+            "ABRIANA PRATISTA ULOLI",
+            "ADINDA DAPUE",
+            "AHMAD RAVATAR HARUN",
+            "AIMAR FAUSTIN USMAN",
+            "ALFAT MAHMUD",
+            "FIRMANSYAH GUAMO",
+            "IRMA HUSAIN",
+            "ISHAK ISMAIL",
+            "KEYLANAFA LIBUNELO",
+            "MOHAMAD ALFAIRUZ NIZAM MATITI",
+            "MOHAMAD FAHRI KANAA",
+            "MOHAMAD FARHAT HARUN",
+            "MOHAMAD IKBAL KANOI",
+            "MOHAMAD NAUFAL",
+            "NIA NADIA KASIM",
+            "RAFAN ALGIFARO HAMID",
+            "RAFIUDIN HASAN",
+            "RAHMA PUTRI HUSAIN",
+            "RALYA KANGO",
+            "RINDIYANI GALEMA",
+            "ROHIM PUTRA K. MI'RADJ",
+            "SAID NURSI SOFYAN MILE",
+            "SUCI AINUN MAHARANI POLUWA",
+            "SYAHRINI RAHIM",
+            "YUSUP RUBAI",
+            "ALBILAL MANHI"
+        ].sort();
+
+        // Assessment Questions Dataset (10 questions total)
+        const questions = [
+            {
+                id: 1,
+                type: "pg",
+                category: "Pilihan Ganda",
+                question: "Pak Hasan adalah seorang pedagang rambutan. Persediaan rambutan miliknya saat ini adalah 2436 kg. Karena merasa persediaan rambuatannya kurang, dia memutuskan untuk membeli rambutan lagi di petani sebanyak 3247 kg. Persediaan rambutan yang dimiliki Hasan saat ini adalah ...",
+                options: ["5638 kg", "5623 kg", "5970 kg", "3215 kg"],
+                answer: 0
+            },
+            {
+                id: 2,
+                type: "pg",
+                category: "Pilihan Ganda",
+                question: "Pak Husain baru saja memanen buah langsat dari kebunnya. Hasil panen dari pak Husain adalah 76342 kg. Sebanyak 15465 kg dijual pak Husain dikirim ke luar Daerah dan sebanyak 2435 kg dijual di pasar. Sisa buah langsat yang dimiliki pak Husain adalah ...",
+                options: ["38765 kg", "58442 kg", "16547 kg", "27689 kg"],
+                answer: 1
+            },
+            {
+                id: 3,
+                type: "pg",
+                category: "Pilihan Ganda",
+                question: "Abdullah pergi ke kota untuk membeli minyak goreng untuk di jual di warungnya. Abdullah membeli minyak goreng sebanyak 723 galon. Jika setiap galon berisi minyak goreng sebanyak 6 liter, maka banyak minyak goreng seluruhnya yang dibeli Abdullah adalah ...",
+                options: ["5467 liter", "3452 liter", "4338 liter", "7681 liter"],
+                answer: 2
+            },
+            {
+                id: 4,
+                type: "pg",
+                category: "Pilihan Ganda",
+                question: "Hamzah adalah seorang pedagang beras. Dia adalah orang yang sangat dermawan. Menjelang hari raya ‘Idul Fitri persediaan beras yang ada di gudangnya adalah 561 kg. Seluruh persediaan beras tersebut akan dibagikan ke 3 Desa tetangga, dimana setiap desa mendapatkan jumlah yang sama dengan desa lain. Banyak beras yang diterima setiap desa adalah ...",
+                options: ["143 kg", "231 kg", "176 kg", "187 kg"],
+                answer: 3
+            },
+            {
+                id: 5,
+                type: "kompleks",
+                category: "Pilihan Ganda Kompleks (Pilih 2 Jawaban Benar)",
+                story: "Perhatikan cerita berikut!\n“Mu’adz dan Abdurrahman adalah seorang pedagang minyak goreng. Mu’adz memiliki persediaan minyak goreng sebanyak 432 liter sedangkan Abdurrahman memiliki persediaany minyak goreng sebanyak 325 liter. Mu’adz membeli lagi minyak goreng sebanyak 263 liter, sedangkan Abdurrahman membeli lagi minyak goreng sebanyak 154 liter.”",
+                question: "Pernyataan yang sesuai dengan cerita di atas adalah ... (Pilih 2 jawaban yang benar)",
+                options: [
+                    "Persediaan minyak goreng Mu’adz adalah 695 liter",
+                    "Persediaan minyak goreng Abdurrahman adalah 637 liter",
+                    "Persediaan minyak goreng Abdurrahman adalah 479 liter",
+                    "Persediaan minyak goreng Mu’adz adalah 549 liter",
+                    "Persediaan minyak goreng Mu’adz dan Abdurrahman sama banyak"
+                ],
+                answers: [0, 2]
+            },
+            {
+                id: 6,
+                type: "kompleks",
+                category: "Pilihan Ganda Kompleks (Pilih 2 Jawaban Benar)",
+                story: "Perhatikan cerita berikut!\n“Usman dan Abubakar adalah pedagang beras. Usman memiliki persediaan beras sebanyak 5982 kg sedangkan Abubakar memiliki persediaan beras sebanyak 4869 kg. Usman berhasil menjual berasnya sebanyak 1546 kg sedangkan Abubakar berhasil menjual berasnya sebanyak 2176 kg.”",
+                question: "Pernyataan yang sesuai dengan cerita di atas adalah ... (Pilih 2 jawaban yang benar)",
+                options: [
+                    "Persediaan beras Usman adalah sebanyak 2768 kg",
+                    "Persediaan beras Abubakar adalah sebanyak 3254 kg",
+                    "Persediaan beras Usman adalah sebanyak 4436 kg",
+                    "Persediaan beras Usman dan Abubakar sama banyak",
+                    "Persediaan beras Abubakar adalah 2693 kg"
+                ],
+                answers: [2, 4]
+            },
+            {
+                id: 7,
+                type: "kompleks",
+                category: "Pilihan Ganda Kompleks (Pilih 2 Jawaban Benar)",
+                story: "Perhatikan cerita berikut!\nUmar dan Ali ditugaskan untuk membantu ayah mereka membawakan hasil panen buah langsat. Buah langsat tersebut terisi di sejumlah kantong. Setiap kantong berisi buah langsat yang sama banyak yaitu 253 gram. Umar membawa 4 ember dan Ali membawa 3 ember.",
+                question: "Pernyataan yang sesuai dengan cerita di atas adalah ... (Pilih 2 jawaban yang benar)",
+                options: [
+                    "Umar membawa langsat sebanyak 234 gram",
+                    "Ali membawa langsat sebanyak 759 gram",
+                    "Ali membawa langsat sebanyak 798 gram",
+                    "Umar membawa langsat sebanyak 1012 gram",
+                    "Umar dan Ali membawa langsat yang sama banyak"
+                ],
+                answers: [1, 3]
+            },
+            {
+                id: 8,
+                type: "isian",
+                category: "Isian Singkat",
+                question: "Sebuah perusahaan Internet memiliki persediaan kabel internet sepanjang 67923 cm. Karena ada permintaan pemasangan internet dari desa Suka Damai, maka perusaan tersebut menggunakan persediaan kabel internetnya sepanjang 25987 cm untuk memenuhi permintaan tersebut. Sisa kabel internet yang dimiliki perusahaan tersebut sekarang adalah sepanjang ... cm",
+                answer: "41936"
+            },
+            {
+                id: 9,
+                type: "isian",
+                category: "Isian Singkat",
+                question: "Zubair baru saja memanen jagung dari kebunnya. Hasil panen tersebut dimasukkan ke dalam karung berukuran 57648 gram. Jika hasil panen Zubair adalah sebanyak 8 karung, berat total jagung yang dipanen Zubair adalah ... gram",
+                answer: "461184"
+            },
+            {
+                id: 10,
+                type: "isian",
+                category: "Isian Singkat",
+                question: "Ubaidah baru saja membeli rambutan sebanyak 7856 gram. Rambutan tersebut akan dibagikan kepada 4 orang keponakannya. Jika setiap orang mendapatkan pembagian rambutan sama banyak, maka banyak rambutan yang diterima setiap orang adalah ... gram",
+                answer: "1964"
+            }
+        ];
+
+        let currentUser = { name: "", className: "" };
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let timerInterval = null;
+        let timeLeft = 30 * 60; // 30 minutes
+
+        const studentSelect = document.getElementById('studentSelect');
+        const classSelect = document.getElementById('classSelect');
+        const identityForm = document.getElementById('identityForm');
+        const loginView = document.getElementById('loginView');
+        const quizView = document.getElementById('quizView');
+        const resultView = document.getElementById('resultView');
+
+        function initStudents() {
+            studentSelect.innerHTML = '<option value="" disabled selected>-- Pilih Nama Siswa --</option>';
+            studentNames.forEach(name => {
+                const opt = document.createElement('option');
+                opt.value = name;
+                opt.textContent = name;
+                studentSelect.appendChild(opt);
+            });
+        }
+
+        function showModal(title, message) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('customModal').classList.remove('hidden');
+        }
+
+        document.getElementById('modalCloseBtn').addEventListener('click', () => {
+            document.getElementById('customModal').classList.add('hidden');
+        });
+
+        identityForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const className = classSelect.value;
+            const studentName = studentSelect.value;
+
+            if (!className || !studentName) {
+                showModal('Perhatian', 'Silakan pilih Kelas dan Nama Siswa terlebih dahulu!');
+                return;
+            }
+
+            currentUser.className = className;
+            currentUser.name = studentName;
+
+            document.getElementById('displayStudentName').textContent = studentName;
+            document.getElementById('displayClassName').textContent = className;
+
+            loginView.classList.add('hidden');
+            quizView.classList.remove('hidden');
+
+            startTimer();
+            renderQuestion();
+            renderPalette();
+        });
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishAssessment();
+                    return;
+                }
+                timeLeft--;
+                const mins = Math.floor(timeLeft / 60);
+                const secs = timeLeft % 60;
+                document.getElementById('timerText').textContent = 
+                    `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestionIndex];
+            document.getElementById('currentNum').textContent = currentQuestionIndex + 1;
+            document.getElementById('questionBadge').textContent = q.category;
+
+            const container = document.getElementById('questionContainer');
+            let html = '';
+
+            if (q.story) {
+                html += `<div class="bg-slate-900/80 border border-sky-500/30 rounded-xl p-4 mb-4 text-sm text-sky-200/90 whitespace-pre-line italic">${q.story}</div>`;
+            }
+
+            html += `<p class="text-sm sm:text-base font-medium text-slate-100 mb-6 leading-relaxed">${q.question}</p>`;
+
+            if (q.type === 'pg') {
+                html += `<div class="space-y-3">`;
+                q.options.forEach((opt, idx) => {
+                    const isChecked = userAnswers[currentQuestionIndex] === idx ? 'checked' : '';
+                    const borderGlow = isChecked ? 'border-cyan-400 bg-sky-950/60 shadow-neon' : 'border-slate-800 bg-slate-900/60 hover:border-sky-500/50';
+                    html += `
+                        <label class="flex items-center gap-3 p-4 rounded-xl border ${borderGlow} cursor-pointer transition-all">
+                            <input type="radio" name="qOption" value="${idx}" ${isChecked} class="w-4 h-4 text-cyan-500 focus:ring-cyan-400 bg-slate-900 border-slate-700 cursor-pointer" onchange="saveAnswer(${currentQuestionIndex}, ${idx})">
+                            <span class="text-xs sm:text-sm text-slate-200"><strong class="text-cyan-400 font-orbitron mr-2">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span>
+                        </label>
+                    `;
+                });
+                html += `</div>`;
+            } else if (q.type === 'kompleks') {
+                html += `<p class="text-xs text-cyan-300 mb-3 font-semibold">* Pilih tepat 2 jawaban yang benar.</p>`;
+                html += `<div class="space-y-3">`;
+                const currentAns = userAnswers[currentQuestionIndex] || [];
+                q.options.forEach((opt, idx) => {
+                    const isChecked = currentAns.includes(idx) ? 'checked' : '';
+                    const borderGlow = isChecked ? 'border-cyan-400 bg-sky-950/60 shadow-neon' : 'border-slate-800 bg-slate-900/60 hover:border-sky-500/50';
+                    html += `
+                        <label class="flex items-center gap-3 p-4 rounded-xl border ${borderGlow} cursor-pointer transition-all">
+                            <input type="checkbox" name="qKompleks" value="${idx}" ${isChecked} class="w-4 h-4 rounded text-cyan-500 focus:ring-cyan-400 bg-slate-900 border-slate-700 cursor-pointer" onchange="saveComplexAnswer(${currentQuestionIndex}, ${idx})">
+                            <span class="text-xs sm:text-sm text-slate-200"><strong class="text-cyan-400 font-orbitron mr-2">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span>
+                        </label>
+                    `;
+                });
+                html += `</div>`;
+            } else if (q.type === 'isian') {
+                const val = userAnswers[currentQuestionIndex] || '';
+                html += `
+                    <div>
+                        <input type="text" id="isianInput" value="${val}" placeholder="Ketik jawaban angka di sini..." class="w-full bg-slate-900/90 border border-sky-500/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400" oninput="saveIsianAnswer(${currentQuestionIndex}, this.value)">
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+
+            document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+            const nextBtn = document.getElementById('nextBtn');
+            if (currentQuestionIndex === questions.length - 1) {
+                nextBtn.textContent = "Selesaikan Asesmen";
+            } else {
+                nextBtn.textContent = "Selanjutnya";
+            }
+        }
+
+        function saveAnswer(qIndex, val) {
+            userAnswers[qIndex] = val;
+            renderPalette();
+        }
+
+        function saveComplexAnswer(qIndex, val) {
+            if (!userAnswers[qIndex]) {
+                userAnswers[qIndex] = [];
+            }
+            const arr = userAnswers[qIndex];
+            const idx = arr.indexOf(val);
+            if (idx > -1) {
+                arr.splice(idx, 1);
+            } else {
+                if (arr.length < 2) {
+                    arr.push(val);
+                } else {
+                    showModal('Perhatian', 'Anda hanya dapat memilih 2 jawaban yang benar!');
+                    renderQuestion();
+                    return;
+                }
+            }
+            renderPalette();
+        }
+
+        function saveIsianAnswer(qIndex, val) {
+            userAnswers[qIndex] = val.trim();
+            renderPalette();
+        }
+
+        function renderPalette() {
+            const palette = document.getElementById('questionPalette');
+            palette.innerHTML = '';
+            questions.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.textContent = idx + 1;
+                
+                let isAnswered = false;
+                if (q.type === 'pg' && userAnswers[idx] !== undefined) isAnswered = true;
+                if (q.type === 'kompleks' && userAnswers[idx] && userAnswers[idx].length > 0) isAnswered = true;
+                if (q.type === 'isian' && userAnswers[idx] && userAnswers[idx].length > 0) isAnswered = true;
+
+                let baseClass = "h-10 rounded-xl font-orbitron text-xs font-bold transition-all flex items-center justify-center cursor-pointer ";
+                if (idx === currentQuestionIndex) {
+                    baseClass += "border-2 border-cyan-400 bg-sky-950 text-cyan-300 shadow-neon";
+                } else if (isAnswered) {
+                    baseClass += "bg-cyan-600/40 border border-cyan-400/60 text-white";
+                } else {
+                    baseClass += "bg-slate-900 border border-slate-700 text-slate-400 hover:border-sky-500";
+                }
+                btn.className = baseClass;
+                btn.onclick = () => {
+                    currentQuestionIndex = idx;
+                    renderQuestion();
+                    renderPalette();
+                };
+                palette.appendChild(btn);
+            });
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+                renderPalette();
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+                renderPalette();
+            } else {
+                confirmFinish();
+            }
+        });
+
+        function confirmFinish() {
+            let unansweredCount = 0;
+            questions.forEach((q, idx) => {
+                let isAnswered = false;
+                if (q.type === 'pg' && userAnswers[idx] !== undefined) isAnswered = true;
+                if (q.type === 'kompleks' && userAnswers[idx] && userAnswers[idx].length > 0) isAnswered = true;
+                if (q.type === 'isian' && userAnswers[idx] && userAnswers[idx].length > 0) isAnswered = true;
+                if (!isAnswered) unansweredCount++;
+            });
+
+            if (unansweredCount > 0) {
+                showModal('Peringatan', `Masih ada ${unansweredCount} soal yang belum dijawab. Yakin ingin menyelesaikan asesmen?`);
+            } else {
+                finishAssessment();
+            }
+        }
+
+        function finishAssessment() {
+            clearInterval(timerInterval);
+            quizView.classList.add('hidden');
+            resultView.classList.remove('hidden');
+
+            document.getElementById('resName').textContent = currentUser.name;
+            document.getElementById('resClass').textContent = currentUser.className;
+
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbw8UusZ8JD1lJ-v_UdzgTUyuzVJ4ak1moaExcZmj-gYyLQ3KBq88S4gQEq945ini34y/exec';
+            if (scriptURL && scriptURL !== 'https://script.google.com/macros/s/AKfycbzQlroQYuQLkOpd_SuUWP2BO2QAGqRqTbN6d9WH7jL9OpfV9m5dT6Fra3VqcUtm0FV7/exec') {
+                const payload = {
+                    name: currentUser.name,
+                    className: currentUser.className,
+                    answers: userAnswers
+                };
+                fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(error => console.error('Error pengiriman:', error.message));
+            }
+        }
+
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            location.reload();
+        });
+    </script>
+</body>
+</html>
